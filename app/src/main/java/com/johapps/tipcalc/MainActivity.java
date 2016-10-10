@@ -15,13 +15,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.johapps.tipcalc.fragments.TipHistoryListFragment;
+import com.johapps.tipcalc.fragments.TipHistoryListFragmentListener;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int DEFAULT_TIP_PERCENTAGE = ;
+    private static final int DEFAULT_TIP_PERCENTAGE = 10;
     @Bind(R.id.inputBill)
     EditText inputBill;
     @Bind(R.id.btnSubmit)
@@ -37,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.txtTip)
     TextView txtTip;
 
+    private TipHistoryListFragmentListener fragmentListener;
+
     private final static int TIP_STEP_CHANGE = 1;
     private final static int DEFAULT_TIP_CHANGE = 10;
 
@@ -45,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        TipHistoryListFragment fragment = (TipHistoryListFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentList);
+
+        fragment.setRetainInstance(true);
+        fragmentListener = (TipHistoryListFragmentListener) fragment;
     }
 
     @Override
@@ -76,17 +86,22 @@ public class MainActivity extends AppCompatActivity {
             double tip = total * (tipPercentage/100d);
 
             String strTip = String.format(getString(R.string.global_message_tip), tip);
+
+            fragmentListener.action(strTip);
+
             txtTip.setVisibility(View.VISIBLE);
             txtTip.setText(strTip);
         }
     }
 
+    @OnClick(R.id.btnIncrease)
     public void handleClickIncrease() {
         hideKeyboard();
         handleTipChange(TIP_STEP_CHANGE);
 
     }
 
+    @OnClick(R.id.btnDecrease)
     public void handleClickDecrease() {
         hideKeyboard();
         handleTipChange(-TIP_STEP_CHANGE);
