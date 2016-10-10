@@ -1,5 +1,5 @@
 
-package com.johapps.tipcalc;
+package com.johapps.tipcalc.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.johapps.tipcalc.R;
+import com.johapps.tipcalc.TipCalcApp;
 import com.johapps.tipcalc.fragments.TipHistoryListFragment;
 import com.johapps.tipcalc.fragments.TipHistoryListFragmentListener;
 
