@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -152,5 +153,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    // Funcion que se encargara de limpiar la RecylerView
+    @OnClick(R.id.btnClear)
+    public void handleClickClear(){
+        fragmentListener.clearList();
+        hideKeyboard();
+    }
 }
