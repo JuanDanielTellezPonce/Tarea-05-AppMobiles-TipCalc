@@ -1,5 +1,6 @@
 package com.johapps.tipcalc.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.johapps.tipcalc.R;
+import com.johapps.tipcalc.activities.DetallePropina;
 import com.johapps.tipcalc.adapters.OnItemClickListener;
 import com.johapps.tipcalc.adapters.TipAdapter;
 import com.johapps.tipcalc.models.TipRecord;
@@ -70,7 +72,12 @@ public class TipHistoryListFragment extends Fragment implements TipHistoryListFr
 
     @Override
     public void onItemClick(TipRecord tipRecord) {
-        // TODO Implementar la logica para llmar una actividad enviandole la onfromacion de la propina
-        Log.v("MESNAJE!!!!", tipRecord.getDateFormated());
+        Intent i = new Intent(getActivity(), DetallePropina.class);
+
+        i.putExtra(DetallePropina.TIP_KEY, tipRecord.getTip());
+        i.putExtra(DetallePropina.BILL_TOTAL_KEY, tipRecord.getBill());
+        i.putExtra(DetallePropina.DATE_KEY, tipRecord.getDateFormated());
+        startActivity(i);
     }
+
 }

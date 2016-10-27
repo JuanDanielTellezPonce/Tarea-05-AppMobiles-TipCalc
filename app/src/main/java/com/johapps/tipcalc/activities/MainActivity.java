@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
             TipRecord record = new TipRecord();
             record.setBill(total);
-            record.setTipPrecentage(tipPercentage);
-            record.setTimestap(new Date());
+            record.setTipPercentage(tipPercentage);
+            record.setTimestamp(new Date());
 
             String strTip = String.format(getString(R.string.global_message_tip), record.getTip());
             fragmentListener.addToList(record);

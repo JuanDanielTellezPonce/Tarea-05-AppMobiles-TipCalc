@@ -8,8 +8,16 @@ import java.util.Date;
  */
 public class TipRecord {
     private double bill;
-    private int tipPrecentage;
-    private Date timestap;
+    private Date timestamp;
+    private int tipPercentage;
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public double getBill() {
         return bill;
@@ -19,28 +27,20 @@ public class TipRecord {
         this.bill = bill;
     }
 
-    public int getTipPrecentage() {
-        return tipPrecentage;
+    public int getTipPercentage() {
+        return tipPercentage;
     }
 
-    public void setTipPrecentage(int tipPrecentage) {
-        this.tipPrecentage = tipPrecentage;
-    }
-
-    public Date getTimestap() {
-        return timestap;
-    }
-
-    public void setTimestap(Date timestap) {
-        this.timestap = timestap;
+    public void setTipPercentage(int tipPercentage) {
+        this.tipPercentage = tipPercentage;
     }
 
     public double getTip() {
-        return bill * (tipPrecentage/100d);
+        return bill*(tipPercentage/100d);
     }
 
-    public String getDateFormated() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM dd, yyyy HH:mm");
-        return simpleDateFormat.format(timestap);
+    public String getDateFormated(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+        return simpleDateFormat.format(timestamp);
     }
 }
