@@ -1,6 +1,6 @@
 package com.johapps.tipcalc.adapters;
 
-import com.johapps.tipcalc.models.TipRecord;
+import com.johapps.tipcalc.entity.TipRecord;
 
 /**
  * Created by Johnny Téllez on 24/10/2016.

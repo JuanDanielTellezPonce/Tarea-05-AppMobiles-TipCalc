@@ -1,6 +1,6 @@
 package com.johapps.tipcalc.fragments;
 
-import com.johapps.tipcalc.models.TipRecord;
+import com.johapps.tipcalc.entity.TipRecord;
 
 /**
  * Created by Johnny Téllez on 10/10/2016.

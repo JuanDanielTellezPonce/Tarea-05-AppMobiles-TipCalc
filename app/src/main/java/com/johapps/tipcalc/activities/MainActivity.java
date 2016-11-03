@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -20,7 +19,7 @@ import com.johapps.tipcalc.R;
 import com.johapps.tipcalc.TipCalcApp;
 import com.johapps.tipcalc.fragments.TipHistoryListFragment;
 import com.johapps.tipcalc.fragments.TipHistoryListFragmentListener;
-import com.johapps.tipcalc.models.TipRecord;
+import com.johapps.tipcalc.entity.TipRecord;
 
 import java.util.Date;
 
