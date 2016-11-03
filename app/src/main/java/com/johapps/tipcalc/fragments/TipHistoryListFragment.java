@@ -14,6 +14,7 @@ import com.johapps.tipcalc.activities.DetallePropina;
 import com.johapps.tipcalc.adapters.OnItemClickListener;
 import com.johapps.tipcalc.adapters.TipAdapter;
 import com.johapps.tipcalc.entity.TipRecord;
+import com.johapps.tipcalc.utils.TipUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,9 +70,9 @@ public class TipHistoryListFragment extends Fragment implements TipHistoryListFr
     public void onItemClick(TipRecord tipRecord) {
         Intent i = new Intent(getActivity(), DetallePropina.class);
 
-        i.putExtra(DetallePropina.TIP_KEY, tipRecord.getTip());
+        i.putExtra(DetallePropina.TIP_KEY, TipUtils.getTip(tipRecord));
         i.putExtra(DetallePropina.BILL_TOTAL_KEY, tipRecord.getBill());
-        i.putExtra(DetallePropina.DATE_KEY, tipRecord.getDateFormated());
+        i.putExtra(DetallePropina.DATE_KEY, TipUtils.getDateFormated(tipRecord));
         startActivity(i);
     }
 

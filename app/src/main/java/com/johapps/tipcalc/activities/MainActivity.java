@@ -20,6 +20,7 @@ import com.johapps.tipcalc.TipCalcApp;
 import com.johapps.tipcalc.fragments.TipHistoryListFragment;
 import com.johapps.tipcalc.fragments.TipHistoryListFragmentListener;
 import com.johapps.tipcalc.entity.TipRecord;
+import com.johapps.tipcalc.utils.TipUtils;
 
 import java.util.Date;
 
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             record.setTipPercentage(tipPercentage);
             record.setTimestamp(new Date());
 
-            String strTip = String.format(getString(R.string.global_message_tip), record.getTip());
+            String strTip = String.format(getString(R.string.global_message_tip), TipUtils.getTip(record));
             fragmentListener.addToList(record);
 
             txtTip.setVisibility(View.VISIBLE);

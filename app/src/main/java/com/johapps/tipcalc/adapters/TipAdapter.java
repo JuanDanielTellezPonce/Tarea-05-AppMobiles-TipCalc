@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.johapps.tipcalc.R;
 import com.johapps.tipcalc.entity.TipRecord;
+import com.johapps.tipcalc.utils.TipUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         TipRecord element = dataset.get(position);
-        String strTip = String.format(context.getString(R.string.global_message_tip), element.getTip());
+        String strTip = String.format(context.getString(R.string.global_message_tip), TipUtils.getTip(element));
         holder.txtContent.setText(strTip);
         holder.setOnItemClickListener(element, onItemClickListener);
     }
