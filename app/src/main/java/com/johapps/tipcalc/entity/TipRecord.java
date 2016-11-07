@@ -2,6 +2,7 @@ package com.johapps.tipcalc.entity;
 
 import com.johapps.tipcalc.db.TipDatabase;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.Date;
  */
 
 @Table(database = TipDatabase.class)
-public class TipRecord {
+public class TipRecord extends BaseModel{
     private double bill;
     private Date timestamp;
     private int tipPercentage;
