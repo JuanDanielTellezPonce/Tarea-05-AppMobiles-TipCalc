@@ -9,10 +9,11 @@ import java.text.SimpleDateFormat;
  */
 public class TipUtils {
     public static double getTip(TipRecord tipRecord) {
-        return tipRecord.getBill()*(tipRecord.getTipPercentage()/100d);
+        return tipRecord.getBill() * (tipRecord.getTipPercentage() / 100d);
     }
 
-    public static String getDateFormated(TipRecord tipRecord){
+    public static String getDateFormated(TipRecord tipRecord) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd,yyyy HH:mm");
         return simpleDateFormat.format(tipRecord.getTimestamp());
+    }
 }

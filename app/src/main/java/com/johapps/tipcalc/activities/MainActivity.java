@@ -17,10 +17,12 @@ import android.widget.TextView;
 
 import com.johapps.tipcalc.R;
 import com.johapps.tipcalc.TipCalcApp;
+import com.johapps.tipcalc.db.TipDatabase;
 import com.johapps.tipcalc.fragments.TipHistoryListFragment;
 import com.johapps.tipcalc.fragments.TipHistoryListFragmentListener;
 import com.johapps.tipcalc.entity.TipRecord;
-import com.johapps.tipcalc.utils.TipUtils;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.Date;
 
@@ -29,8 +31,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final int DEFAULT_TIP_PERCENTAGE = 10;
     @Bind(R.id.inputBill)
     EditText inputBill;
     @Bind(R.id.btnSubmit)
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private TipHistoryListFragmentListener fragmentListener;
 
     private final static int TIP_STEP_CHANGE = 1;
-    private final static int DEFAULT_TIP_CHANGE = 10;
+    private final static int DEFAULT_TIP_PERCENTAGE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +57,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        initDB();
+
         TipHistoryListFragment fragment = (TipHistoryListFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentList);
 
         fragment.setRetainInstance(true);
         fragmentListener = (TipHistoryListFragmentListener) fragment;
+    }
+
+    private void initDB() {
+        FlowManager.init(new FlowConfig.Builder(this).build());
+        FlowManager.getDatabase(TipDatabase.class).getWritableDatabase();
     }
 
     @Override
@@ -87,14 +94,14 @@ public class MainActivity extends AppCompatActivity {
 
         if(!strInputTotal.isEmpty()) {
             double total = Double.parseDouble(strInputTotal);
-            int tipPercentage = getTipPrecentage();
+            int tipPercentage = getTipPercentage();
 
             TipRecord record = new TipRecord();
             record.setBill(total);
             record.setTipPercentage(tipPercentage);
             record.setTimestamp(new Date());
 
-            String strTip = String.format(getString(R.string.global_message_tip), TipUtils.getTip(record));
+            String strTip = String.format(getString(R.string.global_message_tip), record.getTip());
             fragmentListener.addToList(record);
 
             txtTip.setVisibility(View.VISIBLE);
@@ -102,11 +109,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.btnClear)
+    public void handleClickClear() {
+        fragmentListener.clearList();
+    }
+
+
     @OnClick(R.id.btnIncrease)
     public void handleClickIncrease() {
         hideKeyboard();
         handleTipChange(TIP_STEP_CHANGE);
-
     }
 
     @OnClick(R.id.btnDecrease)
@@ -116,22 +128,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public int getTipPrecentage() {
-        int x;
-        String strInputPercentage = inputPercentage.getText().toString().trim();
-        if (!strInputPercentage.isEmpty()) {
-            x = Integer.parseInt(strInputPercentage);
-        } else {
-            x = DEFAULT_TIP_PERCENTAGE;
-            inputPercentage.setText(String.valueOf(x));
+    public int getTipPercentage() {
+        int tipPercentage = DEFAULT_TIP_PERCENTAGE;
+        String strInputTipPercentage = inputPercentage.getText().toString().trim();
+
+        if(!strInputTipPercentage.isEmpty()) {
+            tipPercentage = Integer.parseInt(strInputTipPercentage);
         }
-        return DEFAULT_TIP_CHANGE;
+        else {
+            inputPercentage.setText(String.valueOf(DEFAULT_TIP_PERCENTAGE));
+        }
+
+        return tipPercentage;
     }
 
     public void handleTipChange(int change) {
-        int x = getTipPrecentage();
-        x += change;
-        inputPercentage.setText(String.valueOf(x));
+        int tipPercentage = getTipPercentage();
+        tipPercentage += change;
+
+        if(tipPercentage > 0) {
+            inputPercentage.setText(String.valueOf(tipPercentage));
+        }
     }
 
     private void hideKeyboard() {
@@ -151,12 +168,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(strUrl));
         startActivity(intent);
-    }
-
-    // Funcion que se encargara de limpiar la RecylerView
-    @OnClick(R.id.btnClear)
-    public void handleClickClear(){
-        fragmentListener.clearList();
-        hideKeyboard();
     }
 }

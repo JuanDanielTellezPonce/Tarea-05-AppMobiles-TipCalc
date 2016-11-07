@@ -10,11 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.johapps.tipcalc.R;
-import com.johapps.tipcalc.activities.DetallePropina;
+import com.johapps.tipcalc.activities.TipDetailActivity;
 import com.johapps.tipcalc.adapters.OnItemClickListener;
 import com.johapps.tipcalc.adapters.TipAdapter;
 import com.johapps.tipcalc.entity.TipRecord;
-import com.johapps.tipcalc.utils.TipUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,15 +23,16 @@ import butterknife.ButterKnife;
  */
 
 public class TipHistoryListFragment extends Fragment implements TipHistoryListFragmentListener, OnItemClickListener {
-
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
 
     TipAdapter adapter;
 
+
     public TipHistoryListFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,10 +43,12 @@ public class TipHistoryListFragment extends Fragment implements TipHistoryListFr
         initAdapter();
         initRecyclerView();
         return view;
+
     }
 
+
     private void initAdapter() {
-        if (adapter == null) {
+        if(adapter == null) {
             adapter = new TipAdapter(getActivity().getApplicationContext(), this);
         }
     }
@@ -68,12 +70,12 @@ public class TipHistoryListFragment extends Fragment implements TipHistoryListFr
 
     @Override
     public void onItemClick(TipRecord tipRecord) {
-        Intent i = new Intent(getActivity(), DetallePropina.class);
+        Intent intent = new Intent(getActivity(), TipDetailActivity.class);
+        intent.putExtra(TipDetailActivity.TIP_KEY, tipRecord.getTip());
+        intent.putExtra(TipDetailActivity.BILL_TOTAL_KEY, tipRecord.getBill());
+        intent.putExtra(TipDetailActivity.DATE_KEY, tipRecord.getDateFormated());
 
-        i.putExtra(DetallePropina.TIP_KEY, TipUtils.getTip(tipRecord));
-        i.putExtra(DetallePropina.BILL_TOTAL_KEY, tipRecord.getBill());
-        i.putExtra(DetallePropina.DATE_KEY, TipUtils.getDateFormated(tipRecord));
-        startActivity(i);
+        startActivity(intent);
     }
 
 }
