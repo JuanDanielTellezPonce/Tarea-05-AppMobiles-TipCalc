@@ -1,6 +1,7 @@
 package com.johapps.tipcalc.entity;
 
 import com.johapps.tipcalc.db.TipDatabase;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 
 @Table(database = TipDatabase.class)
 public class TipRecord extends BaseModel{
+    @PrimaryKey(autoincrement = true)
     private double bill;
     private Date timestamp;
     private int tipPercentage;
@@ -45,9 +47,8 @@ public class TipRecord extends BaseModel{
         return bill*(tipPercentage/100d);
     }
 
-    public String getDateFormated(){
+   /* public String getDateFormated(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd,yyyy HH:mm");
-        return simpleDateFormat.format(timestamp);
+        return simpleDateFormat.format(timestamp);*/
     }
 
-}
