@@ -8,4 +8,5 @@ import com.johapps.tipcalc.entity.TipRecord;
 public interface TipHistoryListFragmentListener {
     void addToList(TipRecord record);
     void clearList();
+    void initList();
 }

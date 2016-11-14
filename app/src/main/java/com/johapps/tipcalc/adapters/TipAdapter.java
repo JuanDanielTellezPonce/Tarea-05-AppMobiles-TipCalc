@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static com.johapps.tipcalc.entity.TipRecord_Table.timestamp;
+import static com.johapps.tipcalc.entity.TipRecord.*;
 
 /**
  * Created by Johnny Téllez on 13/10/2016.
@@ -69,6 +69,7 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
     public void add(TipRecord record) {
         //dataset.add(0, record);
         record.save();
+
         dataset = new Select().from(TipRecord.class).where().orderBy(timestamp, false) .queryList();
         notifyDataSetChanged();
     }
