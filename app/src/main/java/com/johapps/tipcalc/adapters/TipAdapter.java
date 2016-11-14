@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.johapps.tipcalc.R;
 import com.johapps.tipcalc.entity.TipRecord;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,7 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
     public void add(TipRecord record) {
         //dataset.add(0, record);
         record.save();
+        dataset = new Select().from(TipRecord.class).queryList();
         notifyDataSetChanged();
     }
 

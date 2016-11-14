@@ -21,6 +21,7 @@ import com.johapps.tipcalc.db.TipDatabase;
 import com.johapps.tipcalc.fragments.TipHistoryListFragment;
 import com.johapps.tipcalc.fragments.TipHistoryListFragmentListener;
 import com.johapps.tipcalc.entity.TipRecord;
+import com.johapps.tipcalc.utils.TipUtils;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragment.setRetainInstance(true);
         fragmentListener = (TipHistoryListFragmentListener) fragment;
+        fragmentListener.initList();
     }
 
     @Override
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             record.setTipPercentage(tipPercentage);
             record.setTimestamp(new Date());
 
-            String strTip = String.format(getString(R.string.global_message_tip), record.getTip());
+            String strTip = String.format(getString(R.string.global_message_tip), TipUtils.getTip(record));
             fragmentListener.addToList(record);
 
             txtTip.setVisibility(View.VISIBLE);
@@ -121,20 +123,25 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnClear)
     public void handleClickClear() {
+        txtTip.setVisibility(View.INVISIBLE);
         fragmentListener.clearList();
     }
 
 
     @OnClick(R.id.btnIncrease)
     public void handleClickIncrease() {
-        hideKeyboard();
-        handleTipChange(TIP_STEP_CHANGE);
+        handleTipChange(1);
+        return;
+       // hideKeyboard();
+       // handleTipChange(TIP_STEP_CHANGE);
     }
 
     @OnClick(R.id.btnDecrease)
     public void handleClickDecrease() {
-        hideKeyboard();
-        handleTipChange(-TIP_STEP_CHANGE);
+        handleTipChange(-1);
+        return;
+        //hideKeyboard();
+        //handleTipChange(-TIP_STEP_CHANGE);
     }
 
 
