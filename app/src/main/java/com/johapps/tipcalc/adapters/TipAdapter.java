@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.johapps.tipcalc.R;
 import com.johapps.tipcalc.entity.TipRecord;
+import com.johapps.tipcalc.utils.TipUtils;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static com.johapps.tipcalc.entity.TipRecord_Table.timestamp;
 
 /**
  * Created by Johnny Téllez on 13/10/2016.
@@ -48,9 +51,14 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         TipRecord element = dataset.get(position);
-        String strTip = String.format(context.getString(R.string.global_message_tip), element.getTip());
+        String strTip = String.format(context.getString(R.string.global_message_tip), TipUtils.getTip(element));
         holder.txtContent.setText(strTip);
         holder.setOnItemClickListener(element, onItemClickListener);
+    }
+
+    public void init() {
+        //Delete(dataset);
+        dataset = new Select().from(TipRecord.class).queryList();
     }
 
     @Override
@@ -61,7 +69,7 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
     public void add(TipRecord record) {
         //dataset.add(0, record);
         record.save();
-        dataset = new Select().from(TipRecord.class).queryList();
+        dataset = new Select().from(TipRecord.class).where().orderBy(timestamp, false) .queryList();
         notifyDataSetChanged();
     }
 
